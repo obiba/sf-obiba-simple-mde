@@ -1,0 +1,172 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="../bower_components/tv4/tv4.js"></script>
+    <script src="../bower_components/objectpath/lib/ObjectPath.js"></script>
+    <script src="../bower_components/angular-schema-form/dist/schema-form.js"></script>
+    <script src="../bower_components/angular-schema-form-bootstrap/bootstrap-decorator.js"></script>
+    <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../bower_components/marked/marked.min.js"></script>
+    <script src="../bower_components/angular-marked/dist/angular-marked.min.js"></script>
+    <script src="../bower_components/moment/moment.js"></script>
+    <script src="../bower_components/d3/d3.min.js"></script>
+    <script src="../bower_components/nvd3/build/nv.d3.js"></script>
+    <script src="../bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
+    <script src="../bower_components/angular-moment/angular-moment.js"></script>
+    <script src="../bower_components/simplemde/dist/simplemde.min.js"></script>
+    <script src="../bower_components/angular-translate/angular-translate.js"></script>
+    <script src="../bower_components/ng-obiba/dist/ng-obiba.js"></script>
+    <script src="../dist/sf-simple-mde.js"></script>
+
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bower_components/simplemde/dist/simplemde.min.css">
+    <link rel="stylesheet" href="main.css">
+
+    <script>
+
+      angular.module('test', [
+        "schemaForm",
+        "sfSimpleMde",
+        "ui.bootstrap",
+        "hc.marked",
+        "pascalprecht.translate",
+        'obiba.form',
+        'obiba.notification',
+        'obiba.rest',
+        'hc.marked',
+        'obiba.utils',
+        'obiba.alert',
+        'obiba.comments',
+        'obiba.graphics',
+        'obiba.simpleMde']).controller('FormController', function($scope) {
+
+        $scope.locale = 'en';
+
+        $scope.$watch('locale', function () {
+          $scope.$broadcast('sfSimpleMdeLocaleChanged', $scope.locale);
+        }, true);
+
+        $scope.schema = {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "object",
+              "format": "simpleMde",
+              "title": "Name",
+              "description": "Name or alias",
+              "maxLength": 10,
+              "minLength": 2,
+              "required": true
+            },
+            "description": {
+              "type": "object",
+              "format": "simpleMde",
+              "title": "Description",
+              "description": "Full description",
+              "required": true
+            }
+          }
+        };
+
+        $scope.form = [
+          {
+            "type":"simpleMde",
+            "key":"name"
+          },
+          {
+            "type":"simpleMde",
+            "key":"description",
+            "rows": 10,
+            "marked": true
+          }
+        ];
+
+        $scope.model = {
+          "name": {
+            "en": "eeeee",
+            "fr": "fffff"
+          },
+          "description": {
+            "en": "### This will render a heading 3 tag   \n\
+\n\
+* this is first item\n\
+* this is second item\n\
+\n\
+```\n\
+This is some code\n\
+```\n\
+\n\
+### Tables with bootstrap style\n\
+\n\
+| Tables      | Are             | Cool  |\n\
+| ------------- |-----------------| ----- |\n\
+| col 3 is      | here           | $1600 |\n\
+| col 2 is      | there          |   $12 |\n\
+| zebra stripes | are neat |    $1 |\n\
+\n\
+### Quotes\n\
+\n\
+> Blockquotes are very handy in email to emulate reply text.\n\
+> This line is part of the same quote.",
+            "fr": "**Ce texte sera en gras**"
+          }
+        };
+
+        $scope.sfOptions = {formDefaults: { languages: {en: 'English', fr: 'French'}}};
+
+        $scope.debug = {schema: angular.copy($scope.schema), form: angular.copy($scope.form)};
+
+      });
+
+    </script>
+    <title>Testing sf localized string ASF addon</title>
+  </head>
+
+  <body ng-app="test">
+    <div class="container-fluid" ng-controller="FormController">
+      <div class="col-sm-12">
+        <h2>sf-simple-mde</h2>
+      </div>
+
+
+      <div class="col-sm-6 form">
+        <form sf-schema="schema" sf-form="form" sf-model="model" sf-options="sfOptions"></form>
+        <div>
+          <p>Changing locale via <strong><em>sfSimpleMdeLocaleChanged</em></strong> event.</p>
+          <div class="btn-group">
+            <label class="btn btn-primary" ng-model="locale" uib-btn-radio="'en'">English</label>
+            <label class="btn btn-primary" ng-model="locale" uib-btn-radio="'fr'">French</label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-sm-6 debug">
+        <div class="wrapper">
+          <div class="row">
+            <div class="col-md-12">
+              <h4>Model</h4>
+              <pre>{{model | json}}</pre>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h4>Form</h4>
+              <pre>{{debug.form | json}}</pre>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h4>Schema</h4>
+              <pre>{{debug.schema | json}}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+
+</html>
