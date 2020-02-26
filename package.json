@@ -5,7 +5,7 @@
   "author": "obiba",
   "repository": {
     "type": "git",
-    "url": "git://github.com/obiba/sf-simple-mde.git"
+    "url": "git://github.com/obiba/sf-obiba-simple-mde.git"
   },
   "license": "MIT",
   "devDependencies": {
