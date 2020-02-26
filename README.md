@@ -22,7 +22,7 @@ Make sure to include `sf-simple-mde.min.js` in your index file and load the modu
 ```
 var myModule = angular.module('myModule', [
  ...
- 'sfSimpleMde','hc.marked'
+ 'sfObibaSimpleMde','hc.marked'
 ]);
 ```
 
@@ -73,4 +73,4 @@ Events
 
 | Name          | Type          | What |
 | ------------- |:-------------:| -----|
-| sfSimpleMdeLocaleChanged| String        | changes the current locale|
+| sfObibaSimpleMdeLocaleChanged| String        | changes the current locale|

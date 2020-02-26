@@ -1,6 +1,6 @@
 {
-  "name": "sf-simple-mde",
-  "version": "1.2.0",
+  "name": "sf-obiba-simple-mde",
+  "version": "1.0.0",
   "license": "MIT",
   "author": "obiba",
   "main": [
@@ -30,6 +30,6 @@
     "bootstrap": "^3.3.7",
     "angular-bootstrap": "2.5.0",
     "simplemde": "^1.11.2",
-    "ng-obiba-mica": "https://github.com/obiba/ng-obiba.git#master"
+    "ng-obiba": "https://github.com/obiba/ng-obiba.git#master"
   }
 }

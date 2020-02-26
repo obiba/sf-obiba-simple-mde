@@ -13,22 +13,15 @@
 
   <pre>{{form.locales}} - {{selectedLocale}}</pre>
 
-  <obiba-simple-mde ng-if="!form.readonly"
+  <obiba-simple-mde
     ng-repeat="locale in form.locales"
     ng-model-options="{ allowInvalid: true }"
     sf-field-model="replaceAll"
     text="$$value$$[locale]"
     update="locale === selectedLocale"
-    ng-show="locale === selectedLocale">
+    readonly="form.readonly"
+    ng-if="locale === selectedLocale">
   </obiba-simple-mde>
-
-  <textarea class="form-control" ng-if="form.readonly"
-            ng-disabled="form.readonly"
-            ng-model-options="{ allowInvalid: true }"
-            sf-field-model="replaceAll" ng-model="$$value$$[locale]"
-            rows="{{form.rows ? form.rows : 5}}"
-            ng-repeat="locale in form.locales"
-            ng-show="locale === selectedLocale"></textarea>
 
   <span class="help-block" sf-message="form.description"></span>
 </div>

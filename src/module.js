@@ -8,18 +8,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('sfSimpleMde', [
+angular.module('sfObibaSimpleMde', [
   'schemaForm',
-  'sfSimpleMdeTemplates',
+  'sfObibaSimpleMdeTemplates',
   'ngObiba'
 ]).config(['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider',
   function (schemaFormProvider, schemaFormDecoratorsProvider, sfBuilderProvider, sfPathProvider) {
 
     var locStr = function (name, schema, options) {
-      if (schema.type === 'object' && schema.format === 'simpleMde') {
+      if (schema.type === 'object' && schema.format === 'obibaSimpleMde') {
         var f = schemaFormProvider.stdFormObj(name, schema, options);
         f.key = options.path;
-        f.type = 'simpleMde';
+        f.type = 'obibaSimpleMde';
         if (!f.languages) {
           f.languages = {en: 'English'};
         }
@@ -48,8 +48,8 @@ angular.module('sfSimpleMde', [
 
     schemaFormDecoratorsProvider.defineAddOn(
       'bootstrapDecorator',           // Name of the decorator you want to add to.
-      'simpleMde',                      // Form type that should render this add-on
-      'src/templates/sf-simple-mde.html',  // Template name in $templateCache
+      'obibaSimpleMde',                      // Form type that should render this add-on
+      'src/templates/sf-obiba-simple-mde.html',  // Template name in $templateCache
       sfBuilderProvider.stdBuilders   // List of builder functions to apply.
     );
 
@@ -76,7 +76,7 @@ angular.module('sfSimpleMde', [
     });
 
     $scope.selectLocale = function (locale) {
-      $rootScope.$broadcast('sfSimpleMdeLocaleChanged', locale);
+      $rootScope.$broadcast('sfObibaSimpleMdeLocaleChanged', locale);
       $scope.open = false;
     };
 
@@ -84,7 +84,7 @@ angular.module('sfSimpleMde', [
       $scope.open = !$scope.open;
     };
 
-    $scope.$on('sfSimpleMdeLocaleChanged', function (event, locale) {
+    $scope.$on('sfObibaSimpleMdeLocaleChanged', function (event, locale) {
       $scope.selectedLocale = locale;
       $rootScope.sfSelectedLocale = locale;
     });

@@ -43,14 +43,14 @@ gulp.task('minify', function () {
     gulp.src(['src/templates/**/*.html']).pipe(templateCache({
       standalone: true,
       root: 'src/templates/',
-      module: 'sfSimpleMdeTemplates'
+      module: 'sfObibaSimpleMdeTemplates'
     })),
     gulp.src(files)
   )
-  .pipe(concat('sf-simple-mde.js'))
+  .pipe(concat('sf-obiba-simple-mde.js'))
   .pipe(gulp.dest('./dist'))
   .pipe(uglify())
-  .pipe(rename('sf-simple-mde.min.js'))
+  .pipe(rename('sf-obiba-simple-mde.min.js'))
   .pipe(gulp.dest('./dist'));
 
   return stream;

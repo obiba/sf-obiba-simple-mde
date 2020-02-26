@@ -18,17 +18,18 @@
     <script src="../bower_components/simplemde/dist/simplemde.min.js"></script>
     <script src="../bower_components/angular-translate/angular-translate.js"></script>
     <script src="../bower_components/ng-obiba/dist/ng-obiba.js"></script>
-    <script src="../dist/sf-simple-mde.js"></script>
+    <script src="../dist/sf-obiba-simple-mde.js"></script>
 
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../bower_components/simplemde/dist/simplemde.min.css">
+    <link rel="stylesheet" href="../bower_components/ng-obiba/dist/css/ng-obiba.css">
     <link rel="stylesheet" href="main.css">
 
     <script>
 
       angular.module('test', [
         "schemaForm",
-        "sfSimpleMde",
+        "sfObibaSimpleMde",
         "ui.bootstrap",
         "hc.marked",
         "pascalprecht.translate",
@@ -45,7 +46,7 @@
         $scope.locale = 'en';
 
         $scope.$watch('locale', function () {
-          $scope.$broadcast('sfSimpleMdeLocaleChanged', $scope.locale);
+          $scope.$broadcast('sfObibaSimpleMdeLocaleChanged', $scope.locale);
         }, true);
 
         $scope.schema = {
@@ -53,7 +54,7 @@
           "properties": {
             "description": {
               "type": "object",
-              "format": "simpleMde",
+              "format": "obibaSimpleMde",
               "title": "Description",
               "description": "Full description",
               "required": true,
@@ -61,9 +62,9 @@
             },
             "objective": {
               "type": "object",
-              "format": "simpleMde",
+              "format": "obibaSimpleMde",
               "title": "Description",
-              "description": "Full description",
+              "description": "Full objective",
               "required": true,
               "readonly": false
             }
@@ -73,16 +74,12 @@
 
         $scope.form = [
           {
-            "type":"simpleMde",
-            "key":"description",
-            "rows": 10,
-            "marked": true
+            "type":"obibaSimpleMde",
+            "key":"description"
           },
           {
-            "type":"simpleMde",
-            "key":"objective",
-            "rows": 10,
-            "marked": true
+            "type":"obibaSimpleMde",
+            "key":"objective"
           }
         ];
 
@@ -113,7 +110,7 @@ This is some code\n\
           }
         };
 
-        $scope.sfOptions = {formDefaults: { languages: {en: 'English', fr: 'French'}}};
+        $scope.sfOptions = {formDefaults: { readonly:false, languages: {en: 'English', fr: 'French'}}};
 
         $scope.debug = {schema: angular.copy($scope.schema), form: angular.copy($scope.form)};
 
@@ -133,7 +130,7 @@ This is some code\n\
       <div class="col-sm-6 form">
         <form sf-schema="schema" sf-form="form" sf-model="model" sf-options="sfOptions"></form>
         <div>
-          <p>Changing locale via <strong><em>sfSimpleMdeLocaleChanged</em></strong> event.</p>
+          <p>Changing locale via <strong><em>sfObibaSimpleMdeLocaleChanged</em></strong> event.</p>
           <div class="btn-group">
             <label class="btn btn-primary" ng-model="locale" uib-btn-radio="'en'">English</label>
             <label class="btn btn-primary" ng-model="locale" uib-btn-radio="'fr'">French</label>

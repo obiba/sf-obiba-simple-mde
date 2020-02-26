@@ -1,4 +1,4 @@
-angular.module("sfSimpleMdeTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("src/templates/sf-simple-mde.html","<div class=\"form-group\"\n     ng-controller=\"SimpleMdeController\"\n     ng-class=\"{\'has-error\': form.disableErrorState !== true && hasError(), \'has-success\': form.disableSuccessState !== true && hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n     schema-validate=\"form\" sf-field-model >\n  <!--<pre>{{form|json}}</pre>-->\n  <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n  <div class=\"pull-right dropdown\" ng-class=\"{\'open\': open}\" ng-if=\"form.locales && form.locales.length > 1\">\n    <a href class=\"dropdown-toggle badge\" ng-click=\"toggleDropdown()\">{{form.languages[selectedLocale]}} <span class=\"caret\"></span></a>\n    <ul class=\"dropdown-menu\">\n      <li ng-repeat=\"loc in form.locales\"><a href ng-click=\"selectLocale(loc)\">{{form.languages[loc]}}</a></li>\n    </ul>\n  </div>\n  <!--<div ng-if=\"!form.rows || form.rows <= 1\"-->\n       <!--ng-class=\"{\'form-group\' : !$last}\">-->\n    <!--<input type=\"text\" class=\"form-control\"-->\n           <!--ng-model-options=\"{ allowInvalid: true }\"-->\n           <!--ng-disabled=\"form.readonly\"-->\n           <!--sf-field-model=\"replaceAll\" ng-model=\"$$value$$[locale]\"-->\n           <!--ng-repeat=\"locale in form.locales\"-->\n           <!--ng-show=\"locale === selectedLocale\"/>-->\n  <!--</div>-->\n\n\n  <!--<obiba-simple-mde text=\"initialText\" on-change=\"onTextChange(text)\"></obiba-simple-mde>-->\n\n\n  <div ng-if=\"form.rows && form.rows > 1\"\n       ng-class=\"{\'form-group\' : !$last}\">\n    <!--<div class=\"panel panel-default\" ng-if=\"form.readonly && form.marked\" >-->\n      <!--<div class=\"panel-body\">-->\n        <!--<div sf-field-model=\"replaceAll\" ng-bind-html=\"render($$value$$, form.tablestyle)\"></div>-->\n      <!--</div>-->\n    <!--</div>-->\n    <textarea class=\"form-control\" ng-if=\"!form.readonly || !form.marked\"\n              ng-disabled=\"form.readonly\"\n              ng-model-options=\"{ allowInvalid: true }\"\n              sf-field-model=\"replaceAll\" ng-model=\"$$value$$[locale]\"\n              rows=\"{{form.rows ? form.rows : 5}}\"\n              ng-repeat=\"locale in form.locales\"\n              ng-show=\"locale === selectedLocale\"></textarea>\n  </div>\n  <span class=\"help-block\" sf-message=\"form.description\"></span>\n</div>\n");}]);
+angular.module("sfObibaSimpleMdeTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("src/templates/sf-obiba-simple-mde.html","<div class=\"form-group\"\n     ng-controller=\"SimpleMdeController\"\n     ng-class=\"{\'has-error\': form.disableErrorState !== true && hasError(), \'has-success\': form.disableSuccessState !== true && hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n     schema-validate=\"form\" sf-field-model >\n  <!--<pre>{{form|json}}</pre>-->\n  <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n  <div class=\"pull-right dropdown\" ng-class=\"{\'open\': open}\" ng-if=\"form.locales && form.locales.length > 1\">\n    <a href class=\"dropdown-toggle badge\" ng-click=\"toggleDropdown()\">{{form.languages[selectedLocale]}} <span class=\"caret\"></span></a>\n    <ul class=\"dropdown-menu\">\n      <li ng-repeat=\"loc in form.locales\"><a href ng-click=\"selectLocale(loc)\">{{form.languages[loc]}}</a></li>\n    </ul>\n  </div>\n\n  <pre>{{form.locales}} - {{selectedLocale}}</pre>\n\n  <obiba-simple-mde\n    ng-repeat=\"locale in form.locales\"\n    ng-model-options=\"{ allowInvalid: true }\"\n    sf-field-model=\"replaceAll\"\n    text=\"$$value$$[locale]\"\n    update=\"locale === selectedLocale\"\n    readonly=\"form.readonly\"\n    ng-if=\"locale === selectedLocale\">\n  </obiba-simple-mde>\n\n  <span class=\"help-block\" sf-message=\"form.description\"></span>\n</div>\n");}]);
 /*
  * Copyright (c) 2017 OBiBa. All rights reserved.
  *
@@ -9,18 +9,18 @@ angular.module("sfSimpleMdeTemplates", []).run(["$templateCache", function($temp
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('sfSimpleMde', [
+angular.module('sfObibaSimpleMde', [
   'schemaForm',
-  'sfSimpleMdeTemplates',
+  'sfObibaSimpleMdeTemplates',
   'ngObiba'
 ]).config(['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider',
   function (schemaFormProvider, schemaFormDecoratorsProvider, sfBuilderProvider, sfPathProvider) {
 
     var locStr = function (name, schema, options) {
-      if (schema.type === 'object' && schema.format === 'simpleMde') {
+      if (schema.type === 'object' && schema.format === 'obibaSimpleMde') {
         var f = schemaFormProvider.stdFormObj(name, schema, options);
         f.key = options.path;
-        f.type = 'simpleMde';
+        f.type = 'obibaSimpleMde';
         if (!f.languages) {
           f.languages = {en: 'English'};
         }
@@ -49,8 +49,8 @@ angular.module('sfSimpleMde', [
 
     schemaFormDecoratorsProvider.defineAddOn(
       'bootstrapDecorator',           // Name of the decorator you want to add to.
-      'simpleMde',                      // Form type that should render this add-on
-      'src/templates/sf-simple-mde.html',  // Template name in $templateCache
+      'obibaSimpleMde',                      // Form type that should render this add-on
+      'src/templates/sf-obiba-simple-mde.html',  // Template name in $templateCache
       sfBuilderProvider.stdBuilders   // List of builder functions to apply.
     );
 
@@ -77,7 +77,7 @@ angular.module('sfSimpleMde', [
     });
 
     $scope.selectLocale = function (locale) {
-      $rootScope.$broadcast('sfSimpleMdeLocaleChanged', locale);
+      $rootScope.$broadcast('sfObibaSimpleMdeLocaleChanged', locale);
       $scope.open = false;
     };
 
@@ -85,7 +85,7 @@ angular.module('sfSimpleMde', [
       $scope.open = !$scope.open;
     };
 
-    $scope.$on('sfSimpleMdeLocaleChanged', function (event, locale) {
+    $scope.$on('sfObibaSimpleMdeLocaleChanged', function (event, locale) {
       $scope.selectedLocale = locale;
       $rootScope.sfSelectedLocale = locale;
     });
