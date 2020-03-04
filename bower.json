@@ -4,7 +4,7 @@
   "license": "MIT",
   "author": "obiba",
   "main": [
-    "dist/sf-simple-mde.min.js"
+    "dist/sf-simple-mde.js"
   ],
   "keywords": [
     "angular-schema-form",
