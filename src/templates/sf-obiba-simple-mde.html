@@ -11,15 +11,23 @@
     </ul>
   </div>
 
-  <obiba-simple-mde
-    ng-repeat="locale in form.locales"
-    ng-model-options="{ allowInvalid: true }"
-    sf-field-model="replaceAll"
-    text="$$value$$[locale]"
-    update="locale === selectedLocale"
-    readonly="form.readonly"
-    ng-if="locale === selectedLocale">
-  </obiba-simple-mde>
+  <div ng-if="!form.readonly">
+    <obiba-simple-mde
+      ng-repeat="locale in form.locales"
+      ng-model-options="{ allowInvalid: true }"
+      sf-field-model="replaceAll"
+      text="$$value$$[locale]"
+      update="locale === selectedLocale"
+      readonly="form.readonly"
+      ng-if="locale === selectedLocale">
+    </obiba-simple-mde>
+  </div>
+
+  <div class="panel panel-default" ng-if="form.readonly" >
+    <div class="panel-body">
+      <div sf-field-model="replaceAll" ng-bind-html="render($$value$$, form.tablestyle)"></div>
+    </div>
+    </div>
 
   <span class="help-block" sf-message="form.description"></span>
 </div>
