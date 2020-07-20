@@ -1,4 +1,4 @@
-angular.module("sfObibaSimpleMdeTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("src/templates/sf-obiba-simple-mde.html","<div class=\"form-group\"\n     ng-controller=\"SimpleMdeController\"\n     ng-class=\"{\'has-error\': form.disableErrorState !== true && hasError(), \'has-success\': form.disableSuccessState !== true && hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n     schema-validate=\"form\" sf-field-model >\n  <!--<pre>{{form|json}}</pre>-->\n  <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n  <div class=\"pull-right dropdown\" ng-class=\"{\'open\': open}\" ng-if=\"form.locales && form.locales.length > 1\">\n    <a href class=\"dropdown-toggle badge\" ng-click=\"toggleDropdown()\">{{form.languages[selectedLocale]}} <span class=\"caret\"></span></a>\n    <ul class=\"dropdown-menu\">\n      <li ng-repeat=\"loc in form.locales\"><a href ng-click=\"selectLocale(loc)\">{{form.languages[loc]}}</a></li>\n    </ul>\n  </div>\n\n  <div ng-if=\"!form.readonly\">\n    <obiba-simple-mde\n      ng-repeat=\"locale in form.locales\"\n      ng-model-options=\"{ allowInvalid: true }\"\n      sf-field-model=\"replaceAll\"\n      text=\"$$value$$[locale]\"\n      update=\"locale === selectedLocale\"\n      readonly=\"form.readonly\"\n      ng-if=\"locale === selectedLocale\">\n    </obiba-simple-mde>\n  </div>\n\n  <div class=\"panel panel-default\" ng-if=\"form.readonly\" >\n    <div class=\"panel-body\">\n      <div sf-field-model=\"replaceAll\" ng-bind-html=\"render($$value$$, form.tablestyle)\"></div>\n    </div>\n  </div>\n\n  <span class=\"help-block\" sf-message=\"form.description\"></span>\n</div>\n");}]);
+angular.module("sfObibaSimpleMdeTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("src/templates/sf-obiba-simple-mde.html","<div class=\"form-group\"\n     ng-controller=\"SimpleMdeController\"\n     ng-class=\"{\'has-error\': form.disableErrorState !== true && hasError(), \'has-success\': form.disableSuccessState !== true && hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n     schema-validate=\"form\" sf-field-model >\n  <!--<pre>{{form|json}}</pre>-->\n  <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n  <div class=\"pull-right dropdown\" ng-class=\"{\'open\': open}\" ng-if=\"form.locales && form.locales.length > 1\">\n    <a href class=\"dropdown-toggle badge\" ng-click=\"toggleDropdown()\">{{form.languages[selectedLocale]}} <span class=\"caret\"></span></a>\n    <ul class=\"dropdown-menu\">\n      <li ng-repeat=\"loc in form.locales\"><a href ng-click=\"selectLocale(loc)\">{{form.languages[loc]}}</a></li>\n    </ul>\n  </div>\n\n  <div ng-if=\"!form.readonly\">\n    <obiba-simple-mde\n      ng-repeat=\"locale in form.locales\"\n      ng-model-options=\"{ allowInvalid: true }\"\n      sf-field-model=\"replaceAll\"\n      text=\"$$value$$[locale]\"\n      update=\"locale === selectedLocale\"\n      readonly=\"form.readonly\"\n      ng-if=\"locale === selectedLocale\">\n    </obiba-simple-mde>\n  </div>\n\n  <div class=\"panel panel-default\" ng-if=\"form.readonly\" >\n    <div class=\"panel-body\">\n      <div sf-field-model=\"replaceAll\" ng-bind-html=\"render($$value$$, form.tablestyle)\"></div>\n    </div>\n    </div>\n\n  <span class=\"help-block\" sf-message=\"form.description\"></span>\n</div>\n");}]);
 /*
  * Copyright (c) 2017 OBiBa. All rights reserved.
  *
@@ -77,7 +77,7 @@ angular.module('sfObibaSimpleMde', [
     });
 
     $scope.selectLocale = function (locale) {
-      $rootScope.$broadcast('sfObibaSimpleMdeLocaleChanged', locale);
+      $rootScope.$broadcast('sfLocalizedStringLocaleChanged', locale);
       $scope.open = false;
     };
 
@@ -85,7 +85,7 @@ angular.module('sfObibaSimpleMde', [
       $scope.open = !$scope.open;
     };
 
-    $scope.$on('sfObibaSimpleMdeLocaleChanged', function (event, locale) {
+    $scope.$on('sfLocalizedStringLocaleChanged', function (event, locale) {
       $scope.selectedLocale = locale;
       $rootScope.sfSelectedLocale = locale;
     });
