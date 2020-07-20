@@ -76,7 +76,7 @@ angular.module('sfObibaSimpleMde', [
     });
 
     $scope.selectLocale = function (locale) {
-      $rootScope.$broadcast('sfObibaSimpleMdeLocaleChanged', locale);
+      $rootScope.$broadcast('sfLocalizedStringLocaleChanged', locale);
       $scope.open = false;
     };
 
@@ -84,7 +84,7 @@ angular.module('sfObibaSimpleMde', [
       $scope.open = !$scope.open;
     };
 
-    $scope.$on('sfObibaSimpleMdeLocaleChanged', function (event, locale) {
+    $scope.$on('sfLocalizedStringLocaleChanged', function (event, locale) {
       $scope.selectedLocale = locale;
       $rootScope.sfSelectedLocale = locale;
     });
