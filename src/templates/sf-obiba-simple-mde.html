@@ -23,11 +23,13 @@
     </obiba-simple-mde>
   </div>
 
-  <div class="panel panel-default" ng-if="form.readonly" >
-    <div class="panel-body">
-      <div sf-field-model="replaceAll" ng-bind-html="render($$value$$, form.tablestyle)"></div>
-    </div>
-    </div>
+  <textarea ng-if="form.readonly"
+            class="form-control"
+            ng-disabled="form.readonly"
+            rows="{{form.rows ? form.rows : 5}}"
+            sf-field-model="replaceAll"
+            ng-bind-html="render($$value$$, form.tablestyle)">
+  </textarea>
 
   <span class="help-block" sf-message="form.description"></span>
 </div>
